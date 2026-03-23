@@ -1,17 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Basic navigation interaction for sidebar
     const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+    const views = document.querySelectorAll('.view-section');
     
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
+            
+            // Allow default behavior for items without a specific view like Settings/Sign Out if needed later.
+            // For now they are all dead links "#"
+            
             // Remove active class from all
             navItems.forEach(nav => nav.classList.remove('active'));
             // Add to clicked
             item.classList.add('active');
+            
+            // Check if there is a target view
+            const targetId = item.getAttribute('data-target');
+            if (targetId) {
+                // Hide all views
+                views.forEach(view => {
+                    view.style.display = 'none';
+                });
+                
+                // Show target view
+                const targetView = document.getElementById(targetId);
+                if (targetView) {
+                    targetView.style.display = 'block';
+                }
+            }
         });
     });
-
     // Run the email fetch function as soon as the page is ready
     getEmailCount();
 });
