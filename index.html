@@ -29,19 +29,19 @@
             <div class="menu-section">
                 <span class="menu-label">MENU</span>
                 <nav class="sidebar-nav">
-                    <a href="#" class="nav-item active">
+                    <a href="#" class="nav-item" data-target="dashboard-view">
                         <i data-lucide="home"></i> Dashboard
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="#" class="nav-item active" data-target="campaigns-view">
                         <i data-lucide="megaphone"></i> Campaigns
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="#" class="nav-item" data-target="explorer-view">
                         <i data-lucide="compass"></i> Campaign Explorer
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="#" class="nav-item" data-target="escalation-view">
                         <i data-lucide="list-checks"></i> Escalation Tasks
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="#" class="nav-item" data-target="metrics-view">
                         <i data-lucide="bar-chart-2"></i> Metrics
                     </a>
                 </nav>
@@ -79,7 +79,7 @@
                 </div>
             </header>
 
-            <div class="dashboard-content">
+            <div class="dashboard-content view-section" id="dashboard-view" style="display: none;">
                 <!-- Dashboard Control -->
                 <div class="dashboard-header">
                     <h3>Overview</h3>
@@ -100,7 +100,7 @@
                     <div class="metric-card">
                         <div class="metric-info">
                             <span class="metric-label">Emails Sent</span>
-                            <span class="metric-value" id="email-count">1,610</span>
+                            <span class="metric-value">1,610</span>
                         </div>
                         <span class="metric-change positive">+12%</span>
                     </div>
@@ -205,7 +205,306 @@
                     </div>
                 </div>
             </div>
+
+            <div class="campaigns-content view-section" id="campaigns-view" style="display: block;">
+                <!-- Campaigns Header -->
+                <div class="campaigns-header">
+                    <div class="header-titles">
+                        <h3>Campaigns</h3>
+                        <p>Manage and track your AI outreach campaigns.</p>
+                    </div>
+                    <button class="primary-btn pill-btn">
+                        <i data-lucide="plus"></i> Create Campaign
+                    </button>
+                </div>
+
+                <!-- Campaigns Table Card -->
+                <div class="campaigns-table-card">
+                    <div class="search-container">
+                        <div class="search-input-wrapper">
+                            <i data-lucide="search"></i>
+                            <input type="text" class="search-input" placeholder="Search campaigns...">
+                        </div>
+                    </div>
+
+                    <table class="campaigns-table">
+                        <thead>
+                            <tr>
+                                <th>CAMPAIGN</th>
+                                <th>STATUS</th>
+                                <th>CHANNELS</th>
+                                <th>CONTACTS</th>
+                                <th>CREATED</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="campaign-info">
+                                        <span class="campaign-name">SunBridge Auto Loans</span>
+                                        <span class="campaign-desc">SunBridge - auto loan delinquencies</span>
+                                    </div>
+                                </td>
+                                <td><span class="status-badge status-draft">Draft</span></td>
+                                <td>
+                                    <div class="channels-list">
+                                        <span class="channel-badge channel-e">E</span>
+                                        <span class="channel-badge channel-p">P</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-text">
+                                        <i data-lucide="users"></i> 0
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-text">
+                                        <i data-lucide="calendar"></i> Mar 16, 2025
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="campaign-info">
+                                        <span class="campaign-name">Metro Finance Spring</span>
+                                        <span class="campaign-desc">Metro Finance - spring collection sw...</span>
+                                    </div>
+                                </td>
+                                <td><span class="status-badge status-running">Running</span></td>
+                                <td>
+                                    <div class="channels-list">
+                                        <span class="channel-badge channel-e">E</span>
+                                        <span class="channel-badge channel-s">S</span>
+                                        <span class="channel-badge channel-p">P</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-text">
+                                        <i data-lucide="users"></i> 850
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-text">
+                                        <i data-lucide="calendar"></i> Mar 10, 2025
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="campaign-info">
+                                        <span class="campaign-name">Ace Cash Q1 Recovery</span>
+                                        <span class="campaign-desc">Ace Cash - overdue accounts Q1 2025</span>
+                                    </div>
+                                </td>
+                                <td><span class="status-badge status-complete">Complete</span></td>
+                                <td>
+                                    <div class="channels-list">
+                                        <span class="channel-badge channel-e">E</span>
+                                        <span class="channel-badge channel-s">S</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-text">
+                                        <i data-lucide="users"></i> 1,300
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-text">
+                                        <i data-lucide="calendar"></i> Mar 1, 2025
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="campaign-explorer-content view-section" id="explorer-view" style="display: none;">
+                <div class="explorer-layout">
+                    <div class="explorer-sidebar">
+                        <h5 class="explorer-title">CAMPAIGNS</h5>
+                        <div class="explorer-search">
+                            <i data-lucide="search"></i>
+                            <input type="text" placeholder="Filter campaigns...">
+                        </div>
+                        <div class="explorer-list">
+                            <div class="explorer-item">
+                                <div class="item-header">
+                                    <span class="item-name">SunBridge Auto Loans</span>
+                                    <i data-lucide="chevron-right" class="arrow-icon"></i>
+                                </div>
+                                <div class="item-status">
+                                    <span class="status-dot dot-draft"></span>
+                                    <span class="status-text">Draft</span>
+                                    <span class="status-date">Mar 16, 2025</span>
+                                </div>
+                                <div class="item-metrics">
+                                    <span><i data-lucide="mail"></i> 0</span>
+                                    <span><i data-lucide="message-square"></i> 0</span>
+                                    <span><i data-lucide="phone"></i> 0</span>
+                                </div>
+                            </div>
+                            <div class="explorer-item">
+                                <div class="item-header">
+                                    <span class="item-name">Metro Finance Spring</span>
+                                    <i data-lucide="chevron-right" class="arrow-icon"></i>
+                                </div>
+                                <div class="item-status">
+                                    <span class="status-dot dot-running"></span>
+                                    <span class="status-text">Running</span>
+                                    <span class="status-date">Mar 10, 2025</span>
+                                </div>
+                                <div class="item-metrics">
+                                    <span><i data-lucide="mail"></i> 410</span>
+                                    <span><i data-lucide="message-square"></i> 320</span>
+                                    <span><i data-lucide="phone"></i> 155</span>
+                                </div>
+                            </div>
+                            <div class="explorer-item">
+                                <div class="item-header">
+                                    <span class="item-name">Ace Cash Q1 Recovery</span>
+                                    <i data-lucide="chevron-right" class="arrow-icon"></i>
+                                </div>
+                                <div class="item-status">
+                                    <span class="status-dot dot-complete"></span>
+                                    <span class="status-text">Complete</span>
+                                    <span class="status-date">Mar 1, 2025</span>
+                                </div>
+                                <div class="item-metrics">
+                                    <span><i data-lucide="mail"></i> 1200</span>
+                                    <span><i data-lucide="message-square"></i> 900</span>
+                                    <span><i data-lucide="phone"></i> 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="explorer-pane middle-pane">
+                        <div class="empty-state">
+                            <i data-lucide="inbox" class="large-icon"></i>
+                            <p>Select a campaign to view accounts</p>
+                        </div>
+                    </div>
+                    <div class="explorer-pane right-pane">
+                        <div class="empty-state">
+                            <i data-lucide="message-square" class="large-icon"></i>
+                            <p>Select an account to view interactions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="escalation-content view-section" id="escalation-view" style="display: none;">
+                <div class="escalation-header">
+                    <div class="header-titles">
+                        <h3>Escalation Tasks</h3>
+                        <p>Human intervention required for these accounts.</p>
+                    </div>
+                    <div class="toggle-group">
+                        <button class="toggle-btn active">Open Tasks</button>
+                        <button class="toggle-btn">Resolved</button>
+                    </div>
+                </div>
+                
+                <div class="task-list">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <div class="task-info-header">
+                                <h4>Susan Carter</h4>
+                                <span class="task-badge">MF-220003</span>
+                            </div>
+                            <div class="task-meta">
+                                Escalated from <span class="fw-600">Metro Finance Spring</span> on Mar 12, 2025 at 5:30 AM
+                            </div>
+                            <div class="task-alert">
+                                <i data-lucide="alert-circle"></i>
+                                <p>Contact disputes the debt via SMS. Potential cease-and-desist situation. Review account ownership before proceeding.</p>
+                            </div>
+                        </div>
+                        <div class="task-action-col">
+                            <button class="dark-btn pill-btn">Mark as Resolved</button>
+                        </div>
+                    </div>
+                    
+                    <div class="task-card">
+                        <div class="task-content">
+                            <div class="task-info-header">
+                                <h4>Robert Kim</h4>
+                                <span class="task-badge">ACE-141414</span>
+                            </div>
+                            <div class="task-meta">
+                                Escalated from <span class="fw-600">Ace Cash Q1 Recovery</span> on Mar 8, 2025 at 5:30 AM
+                            </div>
+                            <div class="task-alert">
+                                <i data-lucide="alert-circle"></i>
+                                <p>3 contact attempts failed. Customer has large balance ($2,200) and is not responding. Manual intervention required.</p>
+                            </div>
+                        </div>
+                        <div class="task-action-col">
+                            <button class="dark-btn pill-btn">Mark as Resolved</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-content view-section" id="metrics-view" style="display: none;">
+                <div class="metrics-header-area">
+                    <div class="header-titles">
+                        <h3>Performance Metrics</h3>
+                        <p>Deep dive into channel effectiveness and engagement.</p>
+                    </div>
+                </div>
+                
+                <div class="perf-cards-row">
+                    <div class="perf-card blue-card">
+                        <span class="perf-label">Global Reach Rate</span>
+                        <span class="perf-value">44.4%</span>
+                    </div>
+                    <div class="perf-card green-card">
+                        <span class="perf-label">Total Engaged Contacts</span>
+                        <span class="perf-value">2,150</span>
+                    </div>
+                    <div class="perf-card purple-card">
+                        <span class="perf-label">Active Campaigns</span>
+                        <span class="perf-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h4 class="chart-title">Outreach Volume by Channel</h4>
+                    <div class="chart-container">
+                        <div class="y-axis">
+                            <span>1800</span>
+                            <span>1350</span>
+                            <span>900</span>
+                            <span>450</span>
+                            <span>0</span>
+                        </div>
+                        <div class="chart-grid">
+                            <div class="grid-line"></div>
+                            <div class="grid-line"></div>
+                            <div class="grid-line"></div>
+                            <div class="grid-line"></div>
+                            <div class="grid-line"></div>
+                            <div class="bars-area">
+                                <div class="bar-group">
+                                    <div class="bar black-bar" style="height: 85%;"></div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar teal-bar" style="height: 60%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
+    </div>
+
+    <!-- Replit Badge -->
+    <div class="replit-badge">
+        <svg viewBox="0 0 32 32" width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.9868 7.37353C12.9868 3.30132 16.2882 0 20.3604 0C24.4325 0 27.7339 3.30132 27.7339 7.37353V10.7471H12.9868V7.37353ZM12.9868 12.9141H27.7339V19.7828C27.7339 23.8549 24.4325 27.1563 20.3604 27.1563H12.9868V12.9141ZM10.8197 27.1563C6.74755 27.1563 3.44618 23.8549 3.44618 19.7828C3.44618 15.7107 6.74755 12.4093 10.8197 12.4093V27.1563Z" fill="#fff"/></svg>
+        <span>Made with Replit</span>
+        <i data-lucide="x" style="width: 12px; height: 12px; cursor: pointer;"></i>
     </div>
 
     <!-- Initialize Lucide Icons -->
@@ -215,3 +514,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
