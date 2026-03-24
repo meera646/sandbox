@@ -89,7 +89,7 @@
                 <!-- Dashboard Control -->
                 <div class="dashboard-header">
                     <h3>Overview</h3>
-                    <button class="primary-btn">
+                    <button class="primary-btn" data-target="create-campaign-view">
                         <i data-lucide="plus"></i> New Campaign
                     </button>
                 </div>
@@ -219,7 +219,7 @@
                         <h3>Campaigns</h3>
                         <p>Manage and track your AI outreach campaigns.</p>
                     </div>
-                    <button class="primary-btn pill-btn">
+                    <button class="primary-btn pill-btn" data-target="create-campaign-view">
                         <i data-lucide="plus"></i> Create Campaign
                     </button>
                 </div>
@@ -384,10 +384,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="explorer-pane middle-pane">
-                        <div class="empty-state">
+                    <div class="explorer-pane middle-pane" style="flex-direction: column; align-items: stretch; justify-content: flex-start;">
+                        <div class="empty-state middle-empty" style="flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; height: 100%;">
                             <i data-lucide="inbox" class="large-icon"></i>
                             <p>Select a campaign to view accounts</p>
+                        </div>
+                        <div class="accounts-container" id="accounts-panel" style="display: none; flex-direction: column; height: 100%; width: 100%;">
+                            <div class="accounts-header">
+                                <h5 class="explorer-title" style="margin: 0; padding-bottom: 12px; font-size: 11px; letter-spacing: 0.5px; color: #64748b;">ACCOUNTS &middot; <span id="accounts-count">0</span></h5>
+                                <div class="explorer-search" style="padding-top: 0; padding-bottom: 16px;">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" placeholder="Search name or account ID...">
+                                </div>
+                            </div>
+                            <div class="accounts-list" id="accounts-list-content">
+                                <!-- Populated by JS -->
+                            </div>
                         </div>
                     </div>
                     <div class="explorer-pane right-pane">
@@ -405,18 +417,19 @@
                         <h3>Escalation Tasks</h3>
                         <p>Human intervention required for these accounts.</p>
                     </div>
-                    <div class="toggle-group">
-                        <button class="toggle-btn active">Open Tasks</button>
-                        <button class="toggle-btn">Resolved</button>
+                    <div class="toggle-group" id="escalation-toggles">
+                        <button class="toggle-btn active" data-target-list="open-tasks-list">Open Tasks</button>
+                        <button class="toggle-btn" data-target-list="resolved-tasks-list">Resolved</button>
                     </div>
                 </div>
 
-                <div class="task-list">
+                <div class="task-list open-task-list" id="open-tasks-list">
                     <div class="task-card">
                         <div class="task-content">
                             <div class="task-info-header">
                                 <h4>Susan Carter</h4>
                                 <span class="task-badge">MF-220003</span>
+                                <a href="#" class="view-profile-link" style="display: none;">View Profile <i data-lucide="external-link"></i></a>
                             </div>
                             <div class="task-meta">
                                 Escalated from <span class="fw-600">Metro Finance Spring</span> on Mar 12, 2025 at 5:30
@@ -429,7 +442,14 @@
                             </div>
                         </div>
                         <div class="task-action-col">
-                            <button class="dark-btn pill-btn">Mark as Resolved</button>
+                            <button class="dark-btn pill-btn resolve-btn">Mark as Resolved</button>
+                            <div class="resolve-form" style="display: none;">
+                                <textarea class="form-textarea resolve-textarea" placeholder="Enter resolution details..."></textarea>
+                                <div class="resolve-actions">
+                                    <button class="text-btn cancel-resolve-btn">Cancel</button>
+                                    <button class="submit-btn green-btn">Submit</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -438,6 +458,7 @@
                             <div class="task-info-header">
                                 <h4>Robert Kim</h4>
                                 <span class="task-badge">ACE-141414</span>
+                                <a href="#" class="view-profile-link" style="display: none;">View Profile <i data-lucide="external-link"></i></a>
                             </div>
                             <div class="task-meta">
                                 Escalated from <span class="fw-600">Ace Cash Q1 Recovery</span> on Mar 8, 2025 at 5:30
@@ -450,7 +471,39 @@
                             </div>
                         </div>
                         <div class="task-action-col">
-                            <button class="dark-btn pill-btn">Mark as Resolved</button>
+                            <button class="dark-btn pill-btn resolve-btn">Mark as Resolved</button>
+                            <div class="resolve-form" style="display: none;">
+                                <textarea class="form-textarea resolve-textarea" placeholder="Enter resolution details..."></textarea>
+                                <div class="resolve-actions">
+                                    <button class="text-btn cancel-resolve-btn">Cancel</button>
+                                    <button class="submit-btn green-btn">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-list resolved-task-list" id="resolved-tasks-list" style="display: none;">
+                    <div class="task-card resolved-card">
+                        <div class="task-content">
+                            <div class="task-info-header">
+                                <h4>Linda Reyes</h4>
+                                <span class="task-badge">ACE-151515</span>
+                            </div>
+                            <div class="task-meta">
+                                Escalated from <span class="fw-600">Ace Cash Q1 Recovery</span> on Mar 5, 2025 at 5:30 AM
+                            </div>
+                            <div class="task-alert">
+                                <i data-lucide="alert-circle"></i>
+                                <p>Customer requested legal representation. All AI outreach must stop immediately.</p>
+                            </div>
+                            <div class="resolution-notes">
+                                <i data-lucide="message-square"></i>
+                                <div>
+                                    <h5>Resolution Notes:</h5>
+                                    <p>Verified with legal team. Account flagged - no further contact. Referred to legal department.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -481,7 +534,7 @@
 
                 <div class="chart-card">
                     <h4 class="chart-title">Outreach Volume by Channel</h4>
-                    <div class="chart-container">
+                    <div class="chart-container" style="margin-bottom: 24px;">
                         <div class="y-axis">
                             <span>1800</span>
                             <span>1350</span>
@@ -497,11 +550,144 @@
                             <div class="grid-line"></div>
                             <div class="bars-area">
                                 <div class="bar-group">
-                                    <div class="bar black-bar" style="height: 85%;"></div>
+                                    <div class="bar black-bar" style="height: 88%;">
+                                        <div class="chart-tooltip">
+                                            <div class="tooltip-title">Emails</div>
+                                            <div class="tooltip-value">sent : 1610</div>
+                                        </div>
+                                    </div>
+                                    <span class="x-label">Emails</span>
                                 </div>
                                 <div class="bar-group">
-                                    <div class="bar teal-bar" style="height: 60%;"></div>
+                                    <div class="bar teal-bar" style="height: 66%;">
+                                        <div class="chart-tooltip">
+                                            <div class="tooltip-title">SMS</div>
+                                            <div class="tooltip-value">sent : 1220</div>
+                                        </div>
+                                    </div>
+                                    <span class="x-label">SMS</span>
                                 </div>
+                                <div class="bar-group">
+                                    <div class="bar black-bar" style="height: 8%;">
+                                        <div class="chart-tooltip left-tooltip">
+                                            <div class="tooltip-title">Calls</div>
+                                            <div class="tooltip-value">made : 155</div>
+                                        </div>
+                                    </div>
+                                    <span class="x-label">Calls</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Campaign Content -->
+            <div class="create-campaign-content view-section" id="create-campaign-view" style="display: none;">
+                <div class="page-header">
+                    <div class="header-titles">
+                        <h3>Create Campaign</h3>
+                        <p>Configure your AI agents and upload your S-Collect export.</p>
+                    </div>
+                </div>
+                
+                <div class="create-layout">
+                    <div class="create-main">
+                        <!-- Campaign Details -->
+                        <div class="create-card">
+                            <div class="card-header border-bottom">
+                                <h4>Campaign Details</h4>
+                            </div>
+                            <div class="card-body form-body">
+                                <div class="form-group">
+                                    <label>Campaign Name</label>
+                                    <input type="text" class="form-input" placeholder="e.g. Q3 Healthcare Debt Recovery">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description (Optional)</label>
+                                    <textarea class="form-textarea" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI Agent Prompts & Sequencing -->
+                        <div class="create-card">
+                            <div class="card-header border-bottom">
+                                <h4>AI Agent Prompts & Sequencing</h4>
+                            </div>
+                            <div class="card-body form-body">
+                                <!-- Email Agent -->
+                                <div class="agent-section">
+                                    <div class="agent-header">
+                                        <input type="checkbox" checked class="custom-checkbox">
+                                        <h5>Email Agent</h5>
+                                    </div>
+                                    <div class="agent-settings">
+                                        <div class="form-group">
+                                            <label>Initial Prompt Template</label>
+                                            <textarea class="form-textarea code-font" rows="3">Hi {{name}}, this is {{agent_name}} from Collective Capital. I'm reaching out regarding your account {{accountId}} with a balance of {{balance}}.</textarea>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Retries</label>
+                                                <input type="number" class="form-input" value="3">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Frequency (hrs)</label>
+                                                <input type="number" class="form-input" value="24">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- SMS Agent -->
+                                <div class="agent-section">
+                                    <div class="agent-header">
+                                        <input type="checkbox" checked class="custom-checkbox">
+                                        <h5>SMS Agent</h5>
+                                    </div>
+                                    <div class="agent-settings">
+                                        <div class="form-group">
+                                            <label>Initial Prompt Template</label>
+                                            <textarea class="form-textarea code-font" rows="2">Hi {{name}}, please contact us regarding account {{accountId}}.</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Voice Agent -->
+                                <div class="agent-section">
+                                    <div class="agent-header">
+                                        <input type="checkbox" checked class="custom-checkbox">
+                                        <h5>Voice Agent</h5>
+                                    </div>
+                                    <div class="agent-settings">
+                                        <div class="form-group">
+                                            <label>System Prompt</label>
+                                            <textarea class="form-textarea code-font" rows="3">Hello, am I speaking with {{name}}? I'm calling from Collective Capital regarding issue {{issueName}}...</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="create-sidebar">
+                        <div class="create-card sticky-card">
+                            <div class="card-header border-bottom">
+                                <h4>Data Source</h4>
+                            </div>
+                            <div class="card-body form-body">
+                                <div class="upload-zone" id="upload-zone-area">
+                                    <input type="file" id="csv-upload" accept=".csv" style="display: none;">
+                                    <div class="upload-icon-wrapper">
+                                        <i data-lucide="cloud-upload"></i>
+                                    </div>
+                                    <h5>Upload S-Collect CSV</h5>
+                                    <p>Drag and drop or click to browse. Must contain accountId and name.</p>
+                                </div>
+                                <button class="primary-btn btn-large full-width-btn" id="create-campaign-btn" disabled>
+                                    <i data-lucide="check-circle"></i> Create & Run Campaign
+                                </button>
                             </div>
                         </div>
                     </div>
