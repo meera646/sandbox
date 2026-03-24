@@ -234,9 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-});
-
-    // Run the email fetch function as soon as the page is ready
     getEmailCount();
 });
 
